@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.nitishsharma.turnspvr.application.common.LoadingState" />
+
+        <variable
+            name="viewModel"
+            type="com.nitishsharma.turnspvr.main.home.HomeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".main.home.HomeFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/searchLayout"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spacing_large_48dp"
+            android:layout_marginStart="@dimen/spacing_small_16dp"
+            android:layout_marginTop="@dimen/spacing_small_16dp"
+            android:layout_marginEnd="@dimen/spacing_small_16dp"
+            android:background="@drawable/white_round_bg_16r"
+            android:padding="@dimen/spacing_very_small_8dp"
+            app:layout_constraintEnd_toStartOf="@id/profileLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/searchIcon"
+                android:layout_width="@dimen/spacing_normal_20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_small_16dp"
+                android:tint="@color/body1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_search" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/searchEditText"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/spacing_small_12dp"
+                android:layout_marginEnd="@dimen/spacing_small_16dp"
+                android:background="@null"
+                android:fontFamily="@font/sanspro_regular"
+                android:hint="Search for movies"
+                android:inputType="text"
+                android:textColor="@color/body1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/searchIcon"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:hint="Search for movies, series or shows " />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/profileLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/spacing_large_48dp"
+            android:layout_marginStart="@dimen/spacing_small_16dp"
+            android:layout_marginTop="@dimen/spacing_small_16dp"
+            android:layout_marginEnd="@dimen/spacing_small_16dp"
+            android:background="@drawable/white_round_bg_16r"
+            android:padding="@dimen/spacing_very_small_8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/profileIcon"
+                android:layout_width="@dimen/spacing_normal_20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/spacing_minimum_5dp"
+                android:paddingVertical="2dp"
+                android:tint="@color/body1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_profile" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="0dp"
+            updateSwipeRefresh="@{viewModel.loadingModel}"
+            android:id="@+id/swipRefresh"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/spacing_very_small_10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchLayout">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recylerHome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <include
+            android:id="@+id/shimmerLayout"
+            layout="@layout/home_shimmer_placeholder"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profileLayout"
+            app:viewModel="@{viewModel}"
+            app:loadingState="@{viewModel.loadingModel.component1()}" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_error"
+            android:visibility="@{(viewModel.loadingModel.component1() == LoadingState.ERROR &amp;&amp; viewModel.loadingModel.component3()) ? View.VISIBLE: View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profileLayout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

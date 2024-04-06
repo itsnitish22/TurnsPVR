@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "TurnsPVR"
 include(":app")
- 
+include(":domain")
+include(":data")
