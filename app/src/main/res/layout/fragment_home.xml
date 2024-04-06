@@ -88,9 +88,9 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:layout_width="0dp"
-            updateSwipeRefresh="@{viewModel.loadingModel}"
             android:id="@+id/swipRefresh"
+            updateSwipeRefresh="@{viewModel.loadingModel}"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/spacing_very_small_10dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -114,8 +114,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/profileLayout"
-            app:viewModel="@{viewModel}"
-            app:loadingState="@{viewModel.loadingModel.component1()}" />
+            app:loadingState="@{viewModel.loadingModel.component1()}"
+            app:viewModel="@{viewModel}" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="wrap_content"

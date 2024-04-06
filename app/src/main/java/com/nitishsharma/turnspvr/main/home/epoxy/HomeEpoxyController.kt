@@ -44,6 +44,8 @@ class HomeEpoxyController(private val itemClickCallback: HomeItemClickCallback) 
                 EpoxyHomeMovieModel_()
                     .id("movie-$type-$index")
                     .imageUrl(result?.posterPath ?: "")
+                    .movieId(result?.movieId ?: -1)
+                    .callback(this@HomeEpoxyController.itemClickCallback)
             )
         }
         carousel {

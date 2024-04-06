@@ -46,7 +46,13 @@ class HomeViewModel @Inject constructor(private val homeMoviesUseCase: HomeMovie
                 addMovies(MovieType.NOW_PLAYING, nowPlayingResponse.data)
                 updateLoadingModel(LoadingModel(LoadingState.COMPLETED, null, isListEmpty()))
             } else if (nowPlayingResponse is Result.Error) {
-                updateLoadingModel(LoadingModel(LoadingState.ERROR, nowPlayingResponse.exception, isListEmpty()))
+                updateLoadingModel(
+                    LoadingModel(
+                        LoadingState.ERROR,
+                        nowPlayingResponse.exception,
+                        isListEmpty()
+                    )
+                )
                 Timber.e("Unable to fetch now playing movies: ${nowPlayingResponse.exception}")
             }
         }
@@ -61,7 +67,13 @@ class HomeViewModel @Inject constructor(private val homeMoviesUseCase: HomeMovie
                 addMovies(MovieType.POPULAR, popularMoviesResponse.data)
                 updateLoadingModel(LoadingModel(LoadingState.COMPLETED, null, isListEmpty()))
             } else if (popularMoviesResponse is Result.Error) {
-                updateLoadingModel(LoadingModel(LoadingState.ERROR, popularMoviesResponse.exception, isListEmpty()))
+                updateLoadingModel(
+                    LoadingModel(
+                        LoadingState.ERROR,
+                        popularMoviesResponse.exception,
+                        isListEmpty()
+                    )
+                )
                 Timber.e("Unable to fetch popular movies: ${popularMoviesResponse.exception}")
             }
         }
@@ -76,7 +88,13 @@ class HomeViewModel @Inject constructor(private val homeMoviesUseCase: HomeMovie
                 addMovies(MovieType.TOP_RATED, topRatedResponse.data)
                 updateLoadingModel(LoadingModel(LoadingState.COMPLETED, null, isListEmpty()))
             } else if (topRatedResponse is Result.Error) {
-                updateLoadingModel(LoadingModel(LoadingState.ERROR, topRatedResponse.exception, isListEmpty()))
+                updateLoadingModel(
+                    LoadingModel(
+                        LoadingState.ERROR,
+                        topRatedResponse.exception,
+                        isListEmpty()
+                    )
+                )
                 Timber.e("Unable to fetch top rated movies: ${topRatedResponse.exception}")
             }
         }
@@ -91,7 +109,13 @@ class HomeViewModel @Inject constructor(private val homeMoviesUseCase: HomeMovie
                 addMovies(MovieType.UPCOMING, upcomingMoviesResponse.data)
                 updateLoadingModel(LoadingModel(LoadingState.COMPLETED, null, isListEmpty()))
             } else if (upcomingMoviesResponse is Result.Error) {
-                updateLoadingModel(LoadingModel(LoadingState.ERROR, upcomingMoviesResponse.exception, isListEmpty()))
+                updateLoadingModel(
+                    LoadingModel(
+                        LoadingState.ERROR,
+                        upcomingMoviesResponse.exception,
+                        isListEmpty()
+                    )
+                )
                 Timber.e("Unable to fetch upcoming movies: ${upcomingMoviesResponse.exception}")
             }
         }
@@ -165,7 +189,7 @@ class HomeViewModel @Inject constructor(private val homeMoviesUseCase: HomeMovie
         }
     }
 
-    fun isListEmpty() = _homeMainModel.value == null
+    private fun isListEmpty() = _homeMainModel.value == null
 }
 
 enum class MovieType {

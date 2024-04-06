@@ -3,6 +3,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -99,8 +100,7 @@ dependencies {
     implementation("com.jakewharton.timber:timber:5.0.1")
 
     //Facebook Shimmer Effect
-    implementation ("com.facebook.shimmer:shimmer:0.5.0")
-
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
 
     api(project(":domain"))
     api(project(":data"))

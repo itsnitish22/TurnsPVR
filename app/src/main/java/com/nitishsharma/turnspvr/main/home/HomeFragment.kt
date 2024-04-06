@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nitishsharma.turnspvr.application.common.SwipeRefreshCallback
+import com.nitishsharma.turnspvr.application.utils.EventObserver
+import com.nitishsharma.turnspvr.application.utils.navigate
 import com.nitishsharma.turnspvr.application.utils.scrollTopTop
 import com.nitishsharma.turnspvr.application.utils.setupSwipeRefresh
 import com.nitishsharma.turnspvr.databinding.FragmentHomeBinding
@@ -48,6 +50,9 @@ class HomeFragment : Fragment(), SwipeRefreshCallback {
                 binding.recylerHome.scrollTopTop()
             }, 500)
         }
+        viewModel.navDirections.observe(viewLifecycleOwner, EventObserver {
+            navigate(it)
+        })
     }
 
     private fun initRecyclerView() {

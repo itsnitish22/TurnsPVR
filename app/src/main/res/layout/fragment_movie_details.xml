@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.nitishsharma.turnspvr.application.common.LoadingState" />
+
+        <variable
+            name="viewModel"
+            type="com.nitishsharma.turnspvr.main.details.MovieDetailsViewmodel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".main.details.MovieDetailsFragment">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_back"
+            app:navigationIconTint="@color/body1" />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipRefresh"
+            updateSwipeRefresh="@{viewModel.loadingModel}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{viewModel.movieDetails == null ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/videoPlayer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/videoPlayerCardView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="10dp"
+                            app:cardBackgroundColor="@color/meta3"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="0dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/courseImageContainer"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:scaleType="fitXY"
+                                app:urlToImage="@{viewModel.movieDetails.backdropPath}"
+                                tools:src="@drawable/movie_dummy_img_horizontal" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/play"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:padding="10dp"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/ic_play" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/fullScreen"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="end|bottom"
+                                android:padding="@dimen/spacing_very_small_10dp"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/ic_full_screen" />
+                        </androidx.cardview.widget.CardView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/videoToolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/videoPlayer">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/movieName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/sanspro_semibold"
+                            android:paddingHorizontal="@dimen/spacing_small_15dp"
+                            android:text="@{viewModel.movieDetails.originalTitle}"
+                            android:textColor="@color/body1"
+                            android:textSize="18sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="Stranger Things" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/toolbarLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="@dimen/spacing_minimum_5dp"
+                            android:paddingVertical="@dimen/spacing_very_small_10dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/movieName">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/releaseYear"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sanspro_regular"
+                                android:paddingHorizontal="@dimen/spacing_very_small_10dp"
+                                android:text="@{viewModel.movieDetails.releaseDate}"
+                                android:textColor="@color/body1"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/view1"
+                                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="2019" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/view1"
+                                android:layout_width="@dimen/spacing_minimum_5dp"
+                                android:layout_height="@dimen/spacing_minimum_5dp"
+                                android:background="@drawable/white_round_bg_16r"
+                                android:backgroundTint="@color/body1"
+                                android:fontFamily="@font/sanspro_regular"
+                                android:paddingHorizontal="@dimen/spacing_very_small_10dp"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/timeTotal"
+                                app:layout_constraintStart_toEndOf="@id/releaseYear"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/timeTotal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sanspro_regular"
+                                android:paddingHorizontal="@dimen/spacing_very_small_10dp"
+                                android:text="@{viewModel.movieDetails.runtime + ` mins`}"
+                                android:textColor="@color/body1"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/view2"
+                                app:layout_constraintStart_toEndOf="@id/view1"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="50 min" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/view2"
+                                android:layout_width="@dimen/spacing_minimum_5dp"
+                                android:layout_height="@dimen/spacing_minimum_5dp"
+                                android:background="@drawable/white_round_bg_16r"
+                                android:backgroundTint="@color/body1"
+                                android:fontFamily="@font/sanspro_regular"
+                                android:paddingHorizontal="@dimen/spacing_very_small_10dp"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/check"
+                                app:layout_constraintStart_toEndOf="@id/timeTotal"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/check"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sanspro_regular"
+                                android:paddingHorizontal="@dimen/spacing_very_small_10dp"
+                                android:src="@drawable/ic_check"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/view3"
+                                app:layout_constraintStart_toEndOf="@id/view2"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/view3"
+                                android:layout_width="@dimen/spacing_minimum_5dp"
+                                android:layout_height="@dimen/spacing_minimum_5dp"
+                                android:background="@drawable/white_round_bg_16r"
+                                android:backgroundTint="@color/body1"
+                                android:fontFamily="@font/sanspro_regular"
+                                android:paddingHorizontal="@dimen/spacing_very_small_10dp"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/share"
+                                app:layout_constraintStart_toEndOf="@id/check"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/share"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sanspro_regular"
+                                android:paddingHorizontal="@dimen/spacing_very_small_10dp"
+                                android:src="@drawable/share_black_24dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/view4"
+                                app:layout_constraintStart_toEndOf="@id/view3"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/view4"
+                                android:layout_width="@dimen/spacing_minimum_5dp"
+                                android:layout_height="@dimen/spacing_minimum_5dp"
+                                android:background="@drawable/white_round_bg_16r"
+                                android:backgroundTint="@color/body1"
+                                android:fontFamily="@font/sanspro_regular"
+                                android:paddingHorizontal="@dimen/spacing_very_small_10dp"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/download"
+                                app:layout_constraintStart_toEndOf="@id/share"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/download"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/sanspro_regular"
+                                android:paddingHorizontal="@dimen/spacing_very_small_10dp"
+                                android:src="@drawable/ic_download_20dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/view4"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/movieDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_very_small_10dp"
+                            android:fontFamily="@font/sanspro_regular"
+                            android:paddingHorizontal="@dimen/spacing_small_15dp"
+                            android:text="@{viewModel.movieDetails.overview + viewModel.movieDetails.overview + viewModel.movieDetails.overview + viewModel.movieDetails.overview + viewModel.movieDetails.overview + viewModel.movieDetails.overview + viewModel.movieDetails.overview}"
+                            android:textColor="@color/body1"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
+                            tools:text="Stranger Things is a mesmerizing blend of '80s nostalgia, supernatural intrigue, and heartwarming friendships. Set in the small town of Hawkins, Indiana, the series follows a group of kids who stumble upon a series of bizarre events after their friend mysteriously disappears. Their quest for answers leads them to uncover a clandestine government experiment gone awry, revealing a parallel dimension known as the Upside Down. With the help of Eleven, a mysterious girl with extraordinary powers, they confront terrifying creatures and sinister forces. As they navigate the mysteries of the Upside Down, the bonds between the characters deepen, weaving a narrative of courage, loyalty, and sacrifice. Stranger Things captivates audiences with its suspenseful storytelling, iconic '80s references, and unforgettable characters, making it a modern classic in the realm of science fiction and horror. Stranger Things is a mesmerizing blend of '80s nostalgia, supernatural intrigue, and heartwarming friendships. Set in the small town of Hawkins, Indiana, the series follows a group of kids who stumble upon a series of bizarre events after their friend mysteriously disappears. Their quest for answers leads them to uncover a clandestine government experiment gone awry, revealing a parallel dimension known as the Upside Down. With the help of Eleven, a mysterious girl with extraordinary powers, they confront terrifying creatures and sinister forces. As they navigate the mysteries of the Upside Down, the bonds between the characters deepen, weaving a narrative of courage, loyalty, and sacrifice. Stranger Things captivates audiences with its suspenseful storytelling, iconic '80s references, and unforgettable characters, making it a modern classic in the realm of science fiction and horror" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </ScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <include
+            android:id="@+id/shimmerLayout"
+            layout="@layout/movie_details_placeholder"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:loadingState="@{viewModel.loadingModel.component1()}"
+            app:viewModel="@{viewModel}" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_error"
+            android:visibility="@{(viewModel.loadingModel.component1() == LoadingState.ERROR &amp;&amp; viewModel.loadingModel.component3()) ? View.VISIBLE: View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
